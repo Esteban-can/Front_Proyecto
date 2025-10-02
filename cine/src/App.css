@@ -1,0 +1,81 @@
+/* App.css */
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.header {
+  background-color: #000000;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.header nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.header nav a {
+  color: white;
+  text-decoration: none;
+}
+
+.header nav a:hover {
+  text-decoration: underline;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  text-align: center;
+}
+
+.footer {
+  background-color: #000000;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo-link:hover {
+  text-decoration: underline;
+}
+.titulo-bienvenida {
+  font-size: 3rem; /* ≈ 40px */
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #002f6c;
+}
+
+
+
+.texto-bienvenida {
+  font-size: 2rem; /* ≈ 19px */
+  color: #333;
+}
