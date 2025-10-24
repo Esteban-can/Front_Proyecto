@@ -1,0 +1,123 @@
+/* === CONTENEDOR GENERAL === */
+.seleccion-container {
+  text-align: center;
+  padding: 30px;
+  font-family: "Poppins", sans-serif;
+  color: #222;
+}
+
+h2 {
+  margin-bottom: 10px;
+  font-size: 28px;
+  color: #222;
+}
+
+p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+/* === CONTADOR DE ASIENTOS === */
+.contador {
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* === CUADRÍCULA DE SALA === */
+.sala-grid {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.fila {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+/* === ASIENTOS === */
+.asiento {
+  width: 40px;
+  height: 40px;
+  margin: 4px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Asiento disponible */
+.asiento.disponible {
+  background-color: #4caf50;
+}
+
+.asiento.disponible:hover {
+  background-color: #43a047;
+  transform: scale(1.1);
+}
+
+/* Asiento seleccionado */
+.asiento.seleccionado {
+  background-color: #2196f3;
+  transform: scale(1.1);
+  box-shadow: 0 0 8px rgba(33, 150, 243, 0.6);
+}
+
+/* Asiento reservado */
+.asiento.reservado {
+  background-color: #e53935;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* === BOTÓN DE CONFIRMACIÓN === */
+.acciones {
+  margin-top: 25px;
+}
+
+.confirmar-btn {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.confirmar-btn:hover {
+  background-color: #f57c00;
+  transform: scale(1.05);
+}
+
+/* === TEXTO DE CARGA === */
+.cargando {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 18px;
+  color: #666;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  .asiento {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+
+  .confirmar-btn {
+    width: 80%;
+    font-size: 14px;
+  }
+}

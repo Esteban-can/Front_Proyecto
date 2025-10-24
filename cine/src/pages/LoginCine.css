@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("/cine-bg.jpg") no-repeat center center/cover; /* 👈 cambia por tu imagen */
+  background: url("./assets/logo2.png") no-repeat center center/cover; /* 👈 cambia por tu imagen */
   font-family: Arial, sans-serif;
 }
 
@@ -24,7 +24,7 @@
 .login-title {
   font-size: 2rem;
   margin-bottom: 0.5rem;
-  color: #ff3c00;
+  color: #e6e4e4;
 }
 
 .login-subtitle {

@@ -1,92 +1,77 @@
 // src/components/LoginCine.jsx
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; //  Importar useNavigate
 import "./LoginCine.css";
+import React, { useState } from "react";
+import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
-export default function LoginPage({ onSuccess }) {
+function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
-  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const navigate = useNavigate(); //  Hook para redirigir
-
-  const fakeAuth = ({ email, password }) =>
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (email === "demo@cine.com" && password === "cine123") {
-          resolve({ user: { name: "Cliente Demo", email } });
-        } else {
-          reject(new Error("Correo o contraseña incorrectos"));
-        }
-      }, 700);
-    });
-
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
-
-    if (!email || !password) {
-      setError("Por favor completa todos los campos");
-      return;
-    }
-
     try {
-      const res = await fakeAuth({ email, password });
-      
-      // Guardar usuario o token
-      if (remember) localStorage.setItem("cine_token", "fake-token");
-      else sessionStorage.setItem("cine_token", "fake-token");
+      const res = await api.get("/usuario");
+      const usuarios = res.data;
 
-      if (onSuccess) onSuccess(res.user);
+      const user = usuarios.find(
+        (u) => u.email === email && u.password === password
+      );
 
-      // 🔹 Redirige automáticamente a la página principal
+      if (!user) {
+        alert("Credenciales incorrectas");
+        return;
+      }
+
+      localStorage.setItem("user", JSON.stringify(user));
+      alert(`Bienvenido ${user.nombre}!`);
       navigate("/");
-
     } catch (err) {
-      setError(err.message);
+      console.error("Error al conectar con la API:", err);
+      alert("Error al conectar con el servidor");
     }
   };
 
   return (
     <div className="login-page">
       <div className="login-container">
-        <h1 className="login-title">Zona 404</h1>
-        <p className="login-subtitle">Inicia sesión para continuar</p>
+        <h2 className="login-title">Iniciar sesión</h2>
+        <p className="login-subtitle">Bienvenido al Cine Zona 404</p>
 
-        <form onSubmit={handleSubmit} className="login-form">
+        <form className="login-form" onSubmit={handleLogin}>
           <input
             type="email"
             placeholder="Correo electrónico"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
-
           <input
             type="password"
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
-
-          <label className="remember-me">
-            <input
-              type="checkbox"
-              checked={remember}
-              onChange={(e) => setRemember(e.target.checked)}
-            />
-            Recuérdame
-          </label>
-
-          {error && <p className="error-text">{error}</p>}
-
-          <button type="submit">Entrar</button>
+          <button type="submit">Ingresar</button>
         </form>
 
-        <p className="login-footer">
-          ¿No tienes cuenta? <a href="#">Regístrate</a>
-        </p>
+        <div className="login-footer">
+          ¿No tienes cuenta?{" "}
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/register");
+            }}
+          >
+            Crear usuario
+          </a>
+        </div>
       </div>
     </div>
   );
 }
+
+export default LoginPage;

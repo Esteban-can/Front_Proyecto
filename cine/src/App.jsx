@@ -1,22 +1,51 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
 import Cartelera from './pages/Cartelera';
 import ListaCines from './pages/ListaCines';
 import ListaPromos from './pages/ListaPromo'; 
 import logo from './assets/logo2.png';
-import ComprarBoletos from "./pages/ComprarBoletos";
+import Comprar from './pages/Comprar';
+import Registrocine from './pages/RegistroCine';
+import Funciones from './pages/Funciones';
+import SeleccionAsientos from './pages/SeleccionAsiento';
+import PromocionesPage from "./pages/PromocionesPage";
+import PagoPage from "./pages/Pagos";
 import './App.css';
 import LoginPage from "./pages/Login";
 
-function Home() {
-   return (
-    <main className="main-content">
-      <h2 className="titulo-bienvenida">Bienvenido a Zona 404</h2>
-      <p className="texto-bienvenida">
-        Consulta la cartelera, compra tus boletos y disfruta del cine.
-      </p>
-      <Cartelera />
-    </main>
+function Header() {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/Login");
+  };
+
+  return (
+    <header className="header">
+      <h1 className="logo-link">
+        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <img src={logo} alt="Logo" className="logo-image" />
+        </Link>
+      </h1>
+
+      <nav>
+        <Link to="/">Cartelera</Link>
+        <Link to="/cines">Cines</Link>
+        <Link to="/promociones">Promociones</Link>
+
+        {!user ? (
+          <Link to="/Login">Login</Link>
+        ) : (
+          <>
+            <span>Hola, {user.nombre}</span>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        )}
+      </nav>
+    </header>
   );
 }
 
@@ -24,27 +53,19 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <header className="header">
-             <h1 className="logo-link">
-            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <img src={logo} alt="Logo" className="logo-image" />
-            </Link>
-          </h1>
-          <nav>
-            <Link to="/">Cartelera</Link>
-            <Link to="/cines">Cines</Link>
-            <Link to="/promociones">Promociones</Link>
-            <Link to="/Login">Login</Link>
-          </nav>
-        </header>
+        <Header />
 
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/comprar/:id" element={<ComprarBoletos />} />
-      
+          <Route path="/" element={<Funciones />} />
+        
           <Route path="/cines" element={<ListaCines />} />
-         <Route path="/promociones" element={<ListaPromos />} />
-          <Route path="/Login" element={<LoginPage/>} />
+          <Route path="/Login" element={<LoginPage />} />
+         <Route path="/agregar" element={<Cartelera />} />
+          <Route path="/comprar/:id" element={<Comprar />} />
+           <Route path="/asientos/:funcionId" element={<SeleccionAsientos />}></Route>
+          <Route path="/register" element={<Registrocine />} />
+             <Route path="/promociones" element={<PromocionesPage />} />
+          <Route path="/pago/:reservaId" element={<PagoPage />} />
         </Routes>
 
         <footer className="footer">

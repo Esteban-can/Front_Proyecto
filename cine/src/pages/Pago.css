@@ -1,0 +1,56 @@
+.pago-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #f5f5f5;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.pago-container h2 {
+  text-align: center;
+  color: #222;
+  margin-bottom: 15px;
+}
+
+.pago-container p {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.pago-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.pago-form label {
+  font-weight: 600;
+  color: #333;
+}
+
+.pago-form input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.pago-form input:focus {
+  border-color: #007bff;
+}
+
+.pago-form button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.pago-form button:hover {
+  background-color: #0056b3;
+}

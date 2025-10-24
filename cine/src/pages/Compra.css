@@ -1,0 +1,97 @@
+.comprar {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  background-color: #ffffff;
+  color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.compra-container {
+  display: flex;
+  flex-direction: row;
+  background: #1a1a1a;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  max-width: 900px;
+}
+
+.compra-img {
+  width: 350px;
+  object-fit: cover;
+  border-right: 2px solid #222;
+}
+
+.compra-info {
+  padding: 25px;
+  flex: 1;
+}
+
+.compra-info h2 {
+  color: #ffcc00;
+  margin-bottom: 10px;
+}
+
+.compra-info p {
+  color: #bbb;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.horarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.horario-btn {
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.horario-btn:hover {
+  background: #555;
+}
+
+.horario-btn.seleccionado {
+  background: #ffcc00;
+  color: #111;
+  border-color: #ffcc00;
+}
+
+.asientos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.asientos input {
+  width: 60px;
+  text-align: center;
+  padding: 6px;
+  border-radius: 6px;
+  border: none;
+}
+
+.confirmar {
+  background: #ffcc00;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #111;
+  transition: 0.3s;
+}
+
+.confirmar:hover {
+  background: #e6b800;
+}
