@@ -32,6 +32,7 @@ function Funciones() {
             hora: f.hora,
             idioma: f.idioma,
             sala: f.sala,
+            precio: f.precio, // 👈 incluimos el precio aquí
           });
 
           return acc;
@@ -79,38 +80,44 @@ function Funciones() {
 
       <div className="peliculas">
         {funciones.length > 0 ? (
-          funciones.map((grupo) => (
-            <div className="tarjeta" key={grupo.pelicula.id}>
-              <img
-                src={grupo.pelicula?.carteleraUrl || "/default.jpg"}
-                alt={grupo.pelicula?.titulo || "Sin título"}
-                onError={(e) => (e.target.src = "/default.jpg")}
-              />
+          funciones.map((grupo) => {
+            // ✅ Tomamos el precio de la primera función (todas suelen tener el mismo)
+            const precio = grupo.funciones[0]?.precio;
 
-              <h3>{grupo.pelicula?.titulo || "Sin título"}</h3>
-              <p><strong>Género:</strong> {grupo.peliculas?.genero}</p>
-              <p><strong>Duración:</strong> {grupo.peliculas?.duracion} min</p>
-              <p><strong>Calificación:</strong> {grupo.peliculas?.calificacion}</p>
+            return (
+              <div className="tarjeta" key={grupo.pelicula.id}>
+                <img
+                  src={grupo.pelicula?.carteleraUrl || "/default.jpg"}
+                  alt={grupo.pelicula?.titulo || "Sin título"}
+                  onError={(e) => (e.target.src = "/default.jpg")}
+                />
 
-              <button
-                className="btn-comprar"
-                onClick={() => handleComprar(grupo.pelicula.id)}
-              >
-                🎟️ Comprar boletos
-              </button>
+                <h3>{grupo.pelicula?.titulo || "Sin título"}</h3>
+                <p><strong>Género:</strong> {grupo.pelicula?.genero || "N/A"}</p>
+                <p><strong>Duración:</strong> {grupo.pelicula?.duracion || "N/A"} min</p>
+                <p><strong>Calificación:</strong> {grupo.pelicula?.calificacion || "N/A"}</p>
+                <p><strong>Precio:</strong>  Q{precio?.toLocaleString() || "N/A"}</p>
 
-                  {esAdmin && (
-                <div className="admin-buttons">
-                  <button
-                    className="btn-eliminar"
-                    onClick={() => handleEliminar(grupo.pelicula.id)}
-                  >
-                    🗑️ Eliminar
-                  </button>
-                </div>
-              )}
-            </div>
-          ))
+                <button
+                  className="btn-comprar"
+                  onClick={() => handleComprar(grupo.pelicula.id)}
+                >
+                  🎟️ Comprar boletos
+                </button>
+
+                {esAdmin && (
+                  <div className="admin-buttons">
+                    <button
+                      className="btn-eliminar"
+                      onClick={() => handleEliminar(grupo.pelicula.id)}
+                    >
+                      🗑️ Eliminar
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          })
         ) : (
           <p>Cargando cartelera...</p>
         )}

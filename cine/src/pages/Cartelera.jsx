@@ -21,7 +21,7 @@ const CarteleraAdmin = () => {
     anio: "",
   });
 
-  // Estado de función con arrays
+  // ✅ Estado de función (ahora incluye precio)
   const [funcionData, setFuncionData] = useState({
     fechas: [""],
     horas: [""],
@@ -29,9 +29,9 @@ const CarteleraAdmin = () => {
     subtitulos: false,
     formato: "2D",
     salaId: "",
+    precio: "", // 👈 Nuevo campo
   });
 
-  // Cargar películas y salas
   useEffect(() => {
     cargarPeliculas();
     cargarSalas();
@@ -55,57 +55,6 @@ const CarteleraAdmin = () => {
     }
   };
 
-  // Abrir / cerrar modal película
-  const abrirModal = (pelicula = null) => {
-    if (pelicula) {
-      setFormData(pelicula);
-      setPeliculaSeleccionada(pelicula);
-    } else {
-      setFormData({
-        titulo: "",
-        genero: "",
-        duracion: "",
-        calificacion: "",
-        sinopsis: "",
-        carteleraUrl: "",
-        pais: "",
-        anio: "",
-      });
-      setPeliculaSeleccionada(null);
-    }
-    setModalAbierto(true);
-  };
-
-  const cerrarModal = () => setModalAbierto(false);
-
-  // Guardar / actualizar película
-  const guardarPelicula = async () => {
-    try {
-      if (peliculaSeleccionada) {
-        await api.put(`/peliculas/update/${peliculaSeleccionada.id}`, formData);
-      } else {
-        await api.post("/peliculas", formData);
-      }
-      setModalAbierto(false);
-      cargarPeliculas();
-    } catch (error) {
-      console.error("Error al guardar película:", error);
-    }
-  };
-
-  // Eliminar película
-  const eliminarPelicula = async (id) => {
-    if (window.confirm("¿Seguro que deseas eliminar esta película?")) {
-      try {
-        await api.delete(`/peliculas/${id}`);
-        cargarPeliculas();
-      } catch (error) {
-        console.error("Error al eliminar película:", error);
-      }
-    }
-  };
-
-  // Modal de funciones
   const abrirModalFuncion = (pelicula) => {
     setPeliculaSeleccionada(pelicula);
     setFuncionData({
@@ -115,13 +64,11 @@ const CarteleraAdmin = () => {
       subtitulos: false,
       formato: "2D",
       salaId: "",
+      precio: "", // 👈 Reinicia precio
     });
     setModalFuncionAbierto(true);
   };
 
-  const cerrarModalFuncion = () => setModalFuncionAbierto(false);
-
-  // Guardar múltiples funciones
   const guardarFuncion = async () => {
     try {
       const payload = {
@@ -132,6 +79,7 @@ const CarteleraAdmin = () => {
         formato: funcionData.formato,
         peliculaId: peliculaSeleccionada.id,
         salaId: funcionData.salaId,
+        precio: funcionData.precio, // 👈 Se envía al backend
       };
 
       const res = await api.post("/funciones/create", payload);
@@ -164,74 +112,6 @@ const CarteleraAdmin = () => {
           </div>
         ))}
       </div>
-
-      {/* ================= MODAL PELÍCULA ================= */}
-      {modalAbierto && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3>{peliculaSeleccionada ? "Editar Película" : "Nueva Película"}</h3>
-
-            <input
-              type="text"
-              placeholder="Título"
-              value={formData.titulo}
-              onChange={(e) => setFormData({ ...formData, titulo: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Género"
-              value={formData.genero}
-              onChange={(e) => setFormData({ ...formData, genero: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Duración (minutos)"
-              value={formData.duracion}
-              onChange={(e) => setFormData({ ...formData, duracion: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Calificación"
-              value={formData.calificacion}
-              onChange={(e) => setFormData({ ...formData, calificacion: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="País"
-              value={formData.pais}
-              onChange={(e) => setFormData({ ...formData, pais: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Año"
-              value={formData.anio}
-              onChange={(e) => setFormData({ ...formData, anio: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="URL del cartel"
-              value={formData.carteleraUrl}
-              onChange={(e) =>
-                setFormData({ ...formData, carteleraUrl: e.target.value })
-              }
-            />
-            <textarea
-              placeholder="Sinopsis"
-              value={formData.sinopsis}
-              onChange={(e) =>
-                setFormData({ ...formData, sinopsis: e.target.value })
-              }
-            />
-
-            <div className="modal-buttons">
-              <button className="guardar" onClick={guardarPelicula}>
-                💾 Guardar
-              </button>
-              <button onClick={cerrarModal}>Cancelar</button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* ================= MODAL FUNCIÓN ================= */}
       {modalFuncionAbierto && (
@@ -336,7 +216,6 @@ const CarteleraAdmin = () => {
             >
               <option value="2D">2D</option>
               <option value="3D">3D</option>
-             
             </select>
 
             <select
@@ -353,11 +232,23 @@ const CarteleraAdmin = () => {
               ))}
             </select>
 
+            {/* 💵 Campo de precio */}
+            <input
+              type="number"
+              placeholder="Precio del boleto"
+              value={funcionData.precio}
+              onChange={(e) =>
+                setFuncionData({ ...funcionData, precio: e.target.value })
+              }
+              min="0"
+              step="0.01"
+            />
+
             <div className="modal-buttons">
               <button className="guardar" onClick={guardarFuncion}>
                 🎬 Guardar Función
               </button>
-              <button onClick={cerrarModalFuncion}>Cancelar</button>
+              <button onClick={() => setModalFuncionAbierto(false)}>Cancelar</button>
             </div>
           </div>
         </div>

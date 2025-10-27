@@ -17,6 +17,7 @@ function SeleccionAsientos() {
   const [asientosSeleccionados, setAsientosSeleccionados] = useState([]);
   const usuarioId = 1;
 
+  // 🔹 Cargar datos de función, sala, asientos y reservas
   useEffect(() => {
     const cargarDatos = async () => {
       try {
@@ -34,7 +35,11 @@ function SeleccionAsientos() {
         setAsientos(dataAsientos.filter((a) => a.salaId === salaId));
 
         const resReservas = await api.get(`/reservas`);
-        setReservas(resReservas.data.filter((r) => r.funcionId === parseInt(funcionId)));
+        setReservas(
+          resReservas.data.filter(
+            (r) => r.funcionId === parseInt(funcionId)
+          )
+        );
       } catch (error) {
         console.error("❌ Error al cargar datos:", error);
       }
@@ -43,11 +48,13 @@ function SeleccionAsientos() {
     cargarDatos();
   }, [funcionId]);
 
+  // 🔸 Verifica si un asiento ya está reservado
   const estaReservado = (asientoId) =>
     reservas.some(
       (r) => r.asientoId === asientoId && r.funcionId === parseInt(funcionId)
     );
 
+  // 🔸 Marcar o desmarcar un asiento
   const toggleAsiento = (asientoId) => {
     if (estaReservado(asientoId)) return;
 
@@ -62,6 +69,7 @@ function SeleccionAsientos() {
     }
   };
 
+  // 🔹 Confirmar la reserva y pasar a pago
   const confirmarReserva = async () => {
     if (asientosSeleccionados.length !== cantidadSolicitada) {
       alert(`Debes seleccionar exactamente ${cantidadSolicitada} asiento(s).`);
@@ -69,18 +77,33 @@ function SeleccionAsientos() {
     }
 
     try {
-      let nuevaReserva = null;
+      const reservasCreadas = [];
+
       for (const asientoId of asientosSeleccionados) {
         const res = await api.post("/reservas/create", {
           usuarioId,
           funcionId,
           asientoId,
         });
-        nuevaReserva = res.data; // Tomamos la última reserva creada
+        reservasCreadas.push(res.data);
       }
 
       alert("✅ Reserva realizada con éxito!");
-      navigate(`/pagos/${nuevaReserva.id}`); // 👉 Redirige a pago individual
+
+      const total = (funcion.precio || 0) * cantidadSolicitada;
+
+      // 👉 Redirigir a la pantalla de pago con toda la info
+      navigate("/pago", {
+        state: {
+          funcion,
+          sala,
+          pelicula: funcion.pelicula,
+          reservas: reservasCreadas,
+          asientosSeleccionados,
+          cantidadSolicitada,
+          total,
+        },
+      });
     } catch (err) {
       console.error(err);
       alert("Error al realizar la reserva.");
@@ -99,7 +122,8 @@ function SeleccionAsientos() {
       </p>
 
       <p className="contador">
-        Asientos seleccionados: <b>{asientosSeleccionados.length}</b> / {cantidadSolicitada}
+        Asientos seleccionados:{" "}
+        <b>{asientosSeleccionados.length}</b> / {cantidadSolicitada}
       </p>
 
       <div className="sala-grid">
@@ -109,7 +133,8 @@ function SeleccionAsientos() {
               const numero = `${String.fromCharCode(65 + fila)}${col + 1}`;
               const asiento = asientos.find((a) => a.numero === numero);
               const reservado = asiento && estaReservado(asiento.id);
-              const seleccionado = asiento && asientosSeleccionados.includes(asiento.id);
+              const seleccionado =
+                asiento && asientosSeleccionados.includes(asiento.id);
 
               return (
                 <button
