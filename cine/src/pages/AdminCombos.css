@@ -1,0 +1,46 @@
+.admin-combos-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.form-combo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form-combo input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.form-combo button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.tabla-combos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-combos th,
+.tabla-combos td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.img-combo {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+}

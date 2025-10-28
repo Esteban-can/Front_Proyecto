@@ -71,44 +71,58 @@ function SeleccionAsientos() {
 
   // 🔹 Confirmar la reserva y pasar a pago
   const confirmarReserva = async () => {
-    if (asientosSeleccionados.length !== cantidadSolicitada) {
-      alert(`Debes seleccionar exactamente ${cantidadSolicitada} asiento(s).`);
-      return;
-    }
+  if (asientosSeleccionados.length !== cantidadSolicitada) {
+    alert(`Debes seleccionar exactamente ${cantidadSolicitada} asiento(s).`);
+    return;
+  }
 
-    try {
-      const reservasCreadas = [];
+  try {
+    const reservasCreadas = [];
 
-      for (const asientoId of asientosSeleccionados) {
+    // Crear cada reserva individualmente y capturar errores sin detener el loop
+    for (const asientoId of asientosSeleccionados) {
+      try {
         const res = await api.post("/reservas/create", {
           usuarioId,
           funcionId,
           asientoId,
         });
         reservasCreadas.push(res.data);
+      } catch (error) {
+        console.error("Error al crear la reserva del asiento", asientoId, error);
+        alert(`No se pudo reservar el asiento ${asientoId}`);
       }
-
-      alert("✅ Reserva realizada con éxito!");
-
-      const total = (funcion.precio || 0) * cantidadSolicitada;
-
-      // 👉 Redirigir a la pantalla de pago con toda la info
-      navigate("/pago", {
-        state: {
-          funcion,
-          sala,
-          pelicula: funcion.pelicula,
-          reservas: reservasCreadas,
-          asientosSeleccionados,
-          cantidadSolicitada,
-          total,
-        },
-      });
-    } catch (err) {
-      console.error(err);
-      alert("Error al realizar la reserva.");
     }
-  };
+
+    if (reservasCreadas.length === 0) {
+      alert("No se pudo crear ninguna reserva. Intenta de nuevo.");
+      return;
+    }
+
+    alert("✅ Reserva realizada con éxito!");
+
+    const total = (funcion.precio || 0) * reservasCreadas.length;
+
+    // Tomar el primer ID de la reserva creada para la URL
+    const reservaId = reservasCreadas[0].id;
+
+    navigate(`/pago/${reservaId}`, {
+      state: {
+        funcion,
+        sala,
+        pelicula: funcion.pelicula,
+        reservas: reservasCreadas,
+        asientosSeleccionados,
+        cantidadSolicitada,
+        total,
+      },
+    });
+  } catch (err) {
+    console.error("Error al confirmar la reserva:", err);
+    alert("Ocurrió un error al realizar la reserva.");
+  }
+};
+
 
   if (!funcion || !sala) return <p className="cargando">Cargando datos...</p>;
 

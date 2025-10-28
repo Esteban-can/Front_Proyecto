@@ -1,57 +1,77 @@
-.ListaPromos{
-  padding: 2rem;
-  background-color: #ffffff;
-  text-align: center;  
-  
-  
+.promos-cliente {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
 }
 
-.ListaPromos h2 {
-  margin-bottom: 1.5rem;
-}
-
-.promos {
+.header-promos {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 20px; /* 👈 separa el botón del título */
 }
 
-.tarjeta {
-  background-color: #948f8f;
-  padding: 1rem;
-  width: 220px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
+
+.header-promos h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
-.tarjeta:hover {
-  transform: scale(1.05);
-}
-
-.tarjeta img {
-  width: 100%;
-  height: 320px;
-  object-fit: cover;
-  border-radius: 5px;
-}
-
-.tarjeta h3 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.3rem;
-}
-
-.tarjeta button {
-  margin-top: 0.5rem;
-  padding: 0.5rem 1rem;
-  background-color: #002f6c;
+.btn-admin-promos {
+  background-color: #2563eb;
   color: white;
   border: none;
-  border-radius: 5px;
+  padding: 8px 14px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
-.tarjeta button:hover {
-  background-color: #0051a1;
+.btn-admin-promos:hover {
+  background-color: #1e40af;
+}
+
+.promos-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+.promo-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.promo-card.inactiva {
+  background-color: #f5f5f5;
+  opacity: 0.7;
+}
+
+.promo-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.promo-card p {
+  color: #444;
+}
+
+.promo-card b {
+  display: block;
+  margin: 6px 0;
+  color: #111;
+}
+
+.activo {
+  color: green;
+  font-weight: 600;
+}
+
+.inactivo {
+  color: red;
+  font-weight: 600;
 }

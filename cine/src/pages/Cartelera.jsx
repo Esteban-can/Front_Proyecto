@@ -55,6 +55,71 @@ const CarteleraAdmin = () => {
     }
   };
 
+  // ✅ Función abrirModal agregada
+  const abrirModal = (pelicula = null) => {
+    setPeliculaSeleccionada(pelicula);
+    if (pelicula) {
+      // Modo edición - llena el formulario con los datos de la película
+      setFormData({
+        titulo: pelicula.titulo,
+        genero: pelicula.genero,
+        duracion: pelicula.duracion,
+        calificacion: pelicula.calificacion,
+        sinopsis: pelicula.sinopsis,
+        carteleraUrl: pelicula.carteleraUrl,
+        pais: pelicula.pais,
+        anio: pelicula.anio,
+      });
+    } else {
+      // Modo agregar - limpia el formulario
+      setFormData({
+        titulo: "",
+        genero: "",
+        duracion: "",
+        calificacion: "",
+        sinopsis: "",
+        carteleraUrl: "",
+        pais: "",
+        anio: "",
+      });
+    }
+    setModalAbierto(true);
+  };
+
+  // ✅ CORREGIDO: Función eliminarPelicula con ruta correcta
+  const eliminarPelicula = async (id) => {
+    if (window.confirm("¿Estás seguro de eliminar esta película?")) {
+      try {
+        await api.delete(`/peliculas/delete/${id}`);
+        cargarPeliculas(); // Recargar la lista
+        alert("Película eliminada correctamente");
+      } catch (error) {
+        console.error("Error al eliminar película:", error);
+        alert("Error al eliminar película");
+      }
+    }
+  };
+
+  // ✅ CORREGIDO: Función guardarPelicula con rutas correctas
+  const guardarPelicula = async () => {
+    try {
+      if (peliculaSeleccionada) {
+        // Modo edición - RUTA CORREGIDA
+        await api.put(`/peliculas/update/${peliculaSeleccionada.id}`, formData);
+        alert("Película actualizada correctamente");
+      } else {
+        // Modo agregar - RUTA CORREGIDA
+        await api.post("/peliculas/create", formData);
+        alert("Película agregada correctamente");
+      }
+      cargarPeliculas(); // Recargar la lista
+      setModalAbierto(false);
+    } catch (error) {
+      console.error("Error al guardar película:", error);
+      alert("Error al guardar película");
+    }
+  };
+
   const abrirModalFuncion = (pelicula) => {
     setPeliculaSeleccionada(pelicula);
     setFuncionData({
@@ -97,7 +162,7 @@ const CarteleraAdmin = () => {
       <h2>Administrar Cartelera</h2>
 
       <button className="btn-agregar" onClick={() => abrirModal()}>
-        ➕ Agregar Película
+       Crear Película
       </button>
 
       <div className="peliculas">
@@ -106,12 +171,76 @@ const CarteleraAdmin = () => {
             <img src={peli.carteleraUrl} alt={peli.titulo} />
             <h3>{peli.titulo}</h3>
             <p>{peli.genero}</p>
-            <button onClick={() => abrirModal(peli)}>✏️ Editar</button>
-            <button onClick={() => eliminarPelicula(peli.id)}>🗑️ Eliminar</button>
-            <button onClick={() => abrirModalFuncion(peli)}>🎟️ Asignar Función</button>
+            <button onClick={() => abrirModal(peli)}> Editar</button>
+            <button onClick={() => eliminarPelicula(peli.id)}> Eliminar</button>
+            <button onClick={() => abrirModalFuncion(peli)}>Asignar Función</button>
           </div>
         ))}
       </div>
+
+      {/* ================= MODAL PELÍCULA ================= */}
+      {modalAbierto && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>{peliculaSeleccionada ? "Editar Película" : "Agregar Película"}</h3>
+            
+            <input
+              type="text"
+              placeholder="Título"
+              value={formData.titulo}
+              onChange={(e) => setFormData({...formData, titulo: e.target.value})}
+            />
+            <input
+              type="text"
+              placeholder="Género"
+              value={formData.genero}
+              onChange={(e) => setFormData({...formData, genero: e.target.value})}
+            />
+            <input
+              type="text"
+              placeholder="Duración (minutos)"
+              value={formData.duracion}
+              onChange={(e) => setFormData({...formData, duracion: e.target.value})}
+            />
+            <input
+              type="text"
+              placeholder="Calificación"
+              value={formData.calificacion}
+              onChange={(e) => setFormData({...formData, calificacion: e.target.value})}
+            />
+            <textarea
+              placeholder="Sinopsis"
+              value={formData.sinopsis}
+              onChange={(e) => setFormData({...formData, sinopsis: e.target.value})}
+            />
+            <input
+              type="text"
+              placeholder="URL del cartel"
+              value={formData.carteleraUrl}
+              onChange={(e) => setFormData({...formData, carteleraUrl: e.target.value})}
+            />
+            <input
+              type="text"
+              placeholder="País"
+              value={formData.pais}
+              onChange={(e) => setFormData({...formData, pais: e.target.value})}
+            />
+            <input
+              type="text"
+              placeholder="Año"
+              value={formData.anio}
+              onChange={(e) => setFormData({...formData, anio: e.target.value})}
+            />
+            
+            <div className="modal-buttons">
+              <button className="guardar" onClick={guardarPelicula}>
+                 {peliculaSeleccionada ? "Actualizar" : "Guardar"}
+              </button>
+              <button onClick={() => setModalAbierto(false)}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ================= MODAL FUNCIÓN ================= */}
       {modalFuncionAbierto && (
@@ -151,7 +280,7 @@ const CarteleraAdmin = () => {
                 setFuncionData({ ...funcionData, fechas: [...funcionData.fechas, ""] })
               }
             >
-              ➕ Agregar fecha
+               Agregar fecha
             </button>
 
             {/* Horas */}
@@ -186,7 +315,7 @@ const CarteleraAdmin = () => {
                 setFuncionData({ ...funcionData, horas: [...funcionData.horas, ""] })
               }
             >
-              ➕ Agregar hora
+               Agregar hora
             </button>
 
             {/* Otros campos */}
@@ -232,7 +361,7 @@ const CarteleraAdmin = () => {
               ))}
             </select>
 
-            {/* 💵 Campo de precio */}
+            {/*  Campo de precio */}
             <input
               type="number"
               placeholder="Precio del boleto"

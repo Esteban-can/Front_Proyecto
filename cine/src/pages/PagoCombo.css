@@ -1,0 +1,109 @@
+.pago-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.pago-container h2 {
+  width: 100%;
+  text-align: center;
+  color: #222;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.resumen {
+  flex: 1;
+  min-width: 260px;
+  background: #f7f7f7;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #ddd;
+}
+
+.resumen h3 {
+  margin-top: 0;
+  color: #e50914;
+  font-size: 1.3rem;
+}
+
+.resumen p {
+  color: #444;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.pago-form {
+  flex: 1.2;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: #fefefe;
+  padding: 25px;
+  border-radius: 16px;
+  border: 1px solid #eee;
+}
+
+.pago-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #333;
+}
+
+.pago-form input {
+  margin-top: 6px;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: border-color 0.2s ease;
+}
+
+.pago-form input:focus {
+  outline: none;
+  border-color: #e50914;
+}
+
+button[type="submit"] {
+  background-color: #e50914;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #b00610;
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .pago-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .resumen, .pago-form {
+    width: 100%;
+  }
+
+  .resumen {
+    order: -1;
+  }
+}
