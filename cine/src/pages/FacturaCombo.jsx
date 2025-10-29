@@ -16,7 +16,7 @@ export default function FacturaCombo() {
     return (
       <div className="factura-container">
         <h2>⚠ No se encontró información de la compra</h2>
-        <button className="volver-btn" onClick={() => navigate("/")}>
+        <button className="btn-volver" onClick={() => navigate("/")}>
           Volver al inicio
         </button>
       </div>
@@ -88,37 +88,57 @@ export default function FacturaCombo() {
     doc.save(`FacturaCombo_Zona404_${venta.id}.pdf`);
   };
 
+  // Calcular IVA y subtotal
+  const iva = (combo.precio * 0.12).toFixed(2);
+  const subtotal = (combo.precio - parseFloat(iva)).toFixed(2);
+
   return (
     <div className="factura-container">
       <h2>Factura de Combo</h2>
 
       <div className="factura-datos">
-        <p><strong>Factura No:</strong> {venta.id}</p>
+        <p><strong>ID de Pago:</strong> {venta.id}</p>
         <p><strong>Código de Ticket:</strong> {venta.ticketCodigo}</p>
-        <p><strong>Fecha:</strong> {new Date().toLocaleString()}</p>
-        <p><strong>Total Pagado:</strong> <b>Q{combo.precio.toFixed(2)}</b></p>
+        
+        <div className="pago-detalles">
+          <p><strong>Subtotal:</strong> Q{subtotal}</p>
+          <p><strong>IVA (12%):</strong> Q{iva}</p>
+          <p><strong>Descuento:</strong> Q0.00</p>
+          <p className="total-pagado"><strong>Total Pagado:</strong> <b>Q{combo.precio.toFixed(2)}</b></p>
+        </div>
+
+       
       </div>
 
+      <div className="separador">_______________________________________________________</div>
+
       <h3>Detalle del Combo</h3>
-      <div className="ticket-card">
-        <img src={combo.imagen} alt={combo.nombre} className="combo-img" />
-        <h4>{combo.nombre}</h4>
-        <p>{combo.descripcion}</p>
-        <p><strong>Precio:</strong> Q{combo.precio.toFixed(2)}</p>
+      <div className="ticket-item">
+        <span className="checkbox">[ ]</span>
+        <div className="ticket-info">
+          <p><strong>{combo.nombre}</strong></p>
+          <p><strong>Descripción:</strong> {combo.descripcion}</p>
+          <p><strong>Cantidad:</strong> 1</p>
+          <p><strong>Precio Unitario:</strong> Q{combo.precio.toFixed(2)}</p>
+          <p><strong>Subtotal:</strong> Q{combo.precio.toFixed(2)}</p>
+        </div>
       </div>
 
       {factura && (
-        <div className="factura-datos">
+        <>
+          <div className="separador">_______________________________________________________</div>
           <h3>Datos de Facturación</h3>
-          <p><strong>NIT:</strong> {factura.nit}</p>
-          <p><strong>Nombre:</strong> {factura.nombre}</p>
-          <p><strong>Dirección:</strong> {factura.direccion}</p>
-        </div>
+          <div className="factura-datos">
+            <p><strong>NIT:</strong> {factura.nit}</p>
+            <p><strong>Nombre:</strong> {factura.nombre}</p>
+            <p><strong>Dirección:</strong> {factura.direccion}</p>
+          </div>
+        </>
       )}
 
       <div className="factura-botones">
-        <button onClick={generarPDF}> Descargar PDF</button>
-        <button onClick={() => navigate("/")}> Volver al inicio</button>
+        <button className="btn-descargar" onClick={generarPDF}>Descargar PDF</button>
+        <button className="btn-volver" onClick={() => navigate("/")}>Volver al inicio</button>
       </div>
     </div>
   );

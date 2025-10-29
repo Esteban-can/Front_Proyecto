@@ -13,7 +13,7 @@ function Funciones() {
       const res = await api.get("/funciones");
       console.log("Funciones cargadas:", res.data);
 
-      // ✅ Agrupar funciones por película
+      
       const agrupadas = Object.values(
         res.data.reduce((acc, f) => {
           const peliculaId = f.pelicula?.id;
@@ -32,7 +32,7 @@ function Funciones() {
             hora: f.hora,
             idioma: f.idioma,
             sala: f.sala,
-            precio: f.precio, // 👈 incluimos el precio aquí
+            precio: f.precio, 
           });
 
           return acc;
@@ -73,15 +73,16 @@ function Funciones() {
       {esAdmin && (
         <div className="admin-header">
           <button onClick={() => navigate("/agregar")} className="btn-agregar">
-            ➕ Agregar Película
+             Agregar Película
           </button>
+     //aqui va el boton de dashboard
         </div>
       )}
 
       <div className="peliculas">
         {funciones.length > 0 ? (
           funciones.map((grupo) => {
-            // ✅ Tomamos el precio de la primera función (todas suelen tener el mismo)
+            //  Tomamos el precio de la primera función (todas suelen tener el mismo)
             const precio = grupo.funciones[0]?.precio;
 
             return (
@@ -102,7 +103,7 @@ function Funciones() {
                   className="btn-comprar"
                   onClick={() => handleComprar(grupo.pelicula.id)}
                 >
-                  🎟️ Comprar boletos
+                   Comprar boletos
                 </button>
 
                 {esAdmin && (
@@ -111,7 +112,7 @@ function Funciones() {
                       className="btn-eliminar"
                       onClick={() => handleEliminar(grupo.pelicula.id)}
                     >
-                      🗑️ Eliminar
+                       Eliminar
                     </button>
                   </div>
                 )}

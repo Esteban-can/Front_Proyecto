@@ -98,7 +98,7 @@ function Comprar() {
                 />
 
                 <button className="confirmar" onClick={handleSeleccionarAsientos}>
-                  🎟️ Seleccionar asientos
+                   Seleccionar asientos
                 </button>
               </div>
             )}

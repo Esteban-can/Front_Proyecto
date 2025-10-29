@@ -1,48 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
+import "./Sucursales.css";
 
-const cines = [
-  {
-    id: 1,
-    nombre: "Zona 404 Centro",
-    direccion: "Av. Reforma 10-10, Ciudad de Guatemala",
-  },
-  {
-    id: 2,
-    nombre: "Zona 404 Norte",
-    direccion: "Zona 4, Blvd. Vista Hermosa, Guatemala",
-  },
-  {
-    id: 3,
-    nombre: "Zona 404 Sur",
-    direccion: "Zona 11, Plaza Miraflores, Guatemala",
-  },
-];
+const CinesUsuario = () => {
+  const [sucursales, setSucursales] = useState([]);
+  const navigate = useNavigate();
+  
+  // Obtener usuario del localStorage
+  const user = JSON.parse(localStorage.getItem("user"));
+  
+  // Verificar si es admin
+  const esAdmin = user?.rol === "administrador" || user?.rol === "admin" || user?.rol === "ADMIN";
 
-function ListaCines() {
+  useEffect(() => {
+    cargarSucursales();
+  }, []);
+
+  const cargarSucursales = async () => {
+    try {
+      const res = await api.get("/sucursales");
+      setSucursales(res.data);
+    } catch (error) {
+      console.error("Error al cargar cines:", error);
+    }
+  };
+
+  const handleAdminCines = () => {
+    navigate("/admincines");
+  };
+
   return (
-    <div style={{ maxWidth: "600px", margin: "auto", padding: "20px" }}>
-      <h2 style={{ fontSize: "3rem", textAlign: "center", marginBottom: "20px" }}>
-  Ubicaciones de nuestros Cines
-</h2>
-      <ul style={{ listStyleType: "none", padding: 0 }}>
-        {cines.map((cine) => (
-          <li
-            key={cine.id}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              padding: "15px",
-              marginBottom: "10px",
-              boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-            }}
-          >
-            <h3 style={{ margin: "0 0 8px 0", color: "#007BFF" }}>{cine.nombre}</h3>
-            <p style={{ margin: 0 }}>{cine.direccion}</p>
-          </li>
+    <div className="cines-usuario">
+      <div className="cines-header">
+        <h2>Nuestros Cines</h2>
+        
+        {esAdmin && (
+          <button onClick={handleAdminCines} className="btn-admin">
+             Administrar Cines
+          </button>
+        )}
+      </div>
+      
+      <div className="cines-grid">
+        {sucursales.map((cine) => (
+          <div key={cine.id} className="cine-card">
+            <div className="cine-info">
+              <h3>{cine.nombre}</h3>
+              <p className="cine-direccion"> {cine.direccion}</p>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
-}
+};
 
-export default ListaCines;
+export default CinesUsuario;

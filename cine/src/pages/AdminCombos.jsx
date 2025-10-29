@@ -94,7 +94,7 @@ export default function AdminCombos() {
           onChange={manejarCambio}
         />
         <button onClick={guardarCombo}>
-          {editando ? "💾 Actualizar" : "➕ Crear Combo"}
+          {editando ? " Actualizar" : " Crear Combo"}
         </button>
       </div>
 

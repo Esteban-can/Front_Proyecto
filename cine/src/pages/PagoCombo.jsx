@@ -8,7 +8,7 @@ import api from "../api/axios";
 import { getComboById } from "../services/comboService";
 import "./PagoCombo.css";
 
-// ✅ Clave pública de Stripe
+//  Clave pública de Stripe
 const stripePromise = loadStripe(
   "pk_test_51SDvJy4TRpDLxRKw8NAfwK2FzkwM3jzJUmMLhuk4Re9GoU0XboSbOBL6CwVRPTW9vy0bWMTMJ6UF6qmHDh3TLii500DqZowHn0"
 );
@@ -55,7 +55,7 @@ function PagoForm({ combo }) {
         storedUser?.data?.id ||
         1;
 
-      // ✅ Crear token de tarjeta con Stripe
+      //  Crear token de tarjeta con Stripe
       const cardElement = elements.getElement(CardElement);
       const { token, error: tokenError } = await stripe.createToken(cardElement, {
         name: nombre,
@@ -69,7 +69,7 @@ function PagoForm({ combo }) {
 
       console.log("✅ Token generado:", token.id);
 
-      // ✅ Enviar al backend para crear la venta con factura obligatoria
+      //  Enviar al backend para crear la venta con factura obligatoria
       const response = await api.post("/ventacomida/create", {
         usuarioId,
         combos: [{ comboId: combo.id, cantidad: 1 }],
@@ -78,7 +78,7 @@ function PagoForm({ combo }) {
       });
 
       if (response.status === 200 || response.status === 201) {
-        Swal.fire("✅ Pago exitoso", "Tu compra fue registrada correctamente.", "success");
+        Swal.fire(" Pago exitoso", "Tu compra fue registrada correctamente.", "success");
         navigate("/factura-combo", {
           state: {
             venta: response.data.venta,
@@ -90,7 +90,7 @@ function PagoForm({ combo }) {
         });
       }
     } catch (error) {
-      console.error("❌ Error en el pago:", error);
+      console.error(" Error en el pago:", error);
       Swal.fire("Error", "No se pudo procesar el pago.", "error");
     } finally {
       setProcesando(false);
@@ -174,7 +174,7 @@ export default function PagoCombo() {
         const res = await getComboById(id);
         setCombo(res.data);
       } catch (error) {
-        console.error("❌ Error al cargar combo:", error);
+        console.error(" Error al cargar combo:", error);
         Swal.fire("Error", "No se pudo cargar el combo.", "error");
       } finally {
         setLoading(false);

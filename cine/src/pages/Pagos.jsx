@@ -61,7 +61,7 @@ function PagoForm({ reservas, total, promocionId, clearCart }) {
         reservaIds,
         metodoPago: "tarjeta",
         promocionId: promocionId || null,
-        // ❌ REMOVER: total, // El backend debe calcular el total
+        //  REMOVER: total, // El backend debe calcular el total
       });
 
       const { clientSecret, pago, tickets } = response.data;
@@ -181,7 +181,7 @@ export default function PagoTarjeta({ clearCart }) {
       );
 
       if (!promo) {
-        setMensajePromo("❌ Código de promoción inválido o inactivo.");
+        setMensajePromo(" Código de promoción inválido o inactivo.");
         setPromocion(null);
         setTotal(totalInicial);
         return;
@@ -197,7 +197,7 @@ export default function PagoTarjeta({ clearCart }) {
 
       setPromocion(promo);
       setTotal(nuevoTotal);
-      setMensajePromo(`✅ Promoción aplicada: -${porcentajeDescuento}% (Q${descuento.toFixed(2)})`);
+      setMensajePromo(` Promoción aplicada: -${porcentajeDescuento}% (Q${descuento.toFixed(2)})`);
     } catch (error) {
       console.error("Error obteniendo promociones:", error);
       setMensajePromo("⚠ No se pudo validar la promoción.");
@@ -238,8 +238,8 @@ export default function PagoTarjeta({ clearCart }) {
 
         {promocion && (
           <p className="descuento-info">
-            🏷 <strong>Promoción aplicada:</strong> {promocion.descripcion} 
-            {/* 🔹 CORRECCIÓN: Mostrar el porcentaje correcto */}
+             <strong>Promoción aplicada:</strong> {promocion.descripcion} 
+           
             ({(promocion.descuento * 100).toFixed(0)}%)
           </p>
         )}

@@ -19,13 +19,14 @@
 }
 
 .btn-admin-promos {
-  background-color: #2563eb;
-  color: white;
+  background: #007bff;
+  color: #fff;
   border: none;
-  padding: 8px 14px;
+  padding: 10px 18px;
   border-radius: 8px;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .btn-admin-promos:hover {

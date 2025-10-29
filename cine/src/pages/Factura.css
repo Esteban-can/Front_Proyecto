@@ -6,6 +6,7 @@
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  font-family: Arial, sans-serif;
 }
 
 .factura-container h2 {
@@ -14,43 +15,100 @@
   margin-bottom: 20px;
 }
 
-.factura-info p {
+.factura-datos p {
   line-height: 1.6;
+  margin: 8px 0;
 }
 
-.tickets-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+.pago-detalles {
+  margin: 15px 0;
+  padding-left: 15px;
+}
+
+.total-pagado {
+  font-size: 1.1em;
+  margin-top: 10px !important;
+}
+
+.estado-pago {
+  margin-top: 15px !important;
+  font-size: 1.1em;
+}
+
+.separador {
+  text-align: center;
+  margin: 25px 0;
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.tickets-list {
   margin-top: 20px;
 }
 
-.ticket {
-  background: #222;
+.ticket-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 25px;
   padding: 15px;
-  border: 1px solid #ffd700;
+  background: #1a1a1a;
   border-radius: 8px;
-  text-align: center;
+  border-left: 3px solid #ffd700;
 }
 
-.ticket h4 {
+.checkbox {
   color: #ffd700;
+  font-weight: bold;
+  margin-right: 15px;
+  margin-top: 3px;
 }
 
-.volver-btn {
-  margin-top: 30px;
-  background: #ffd700;
+.ticket-info p {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.ticket-info p:first-child {
+  color: #ffd700;
+  font-size: 1.1em;
+  margin-bottom: 8px;
+}
+
+/* Botón de Descargar PDF - ROJO */
+.btn-descargar {
+  background: #ff4444 !important;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn-descargar:hover {
+  background: #cc0000 !important;
+}
+
+/* Botón de Volver al Inicio - AMARILLO */
+.btn-volver {
+  background: #ffd700 !important;
   color: #111;
   font-weight: bold;
   border: none;
   padding: 12px 25px;
   border-radius: 8px;
   cursor: pointer;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 10px;
 }
 
-.volver-btn:hover {
-  background: #e6c200;
+.btn-volver:hover {
+  background: #e6c200 !important;
+}
+
+.factura-botones {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 20px;
 }

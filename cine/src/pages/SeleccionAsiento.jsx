@@ -41,7 +41,7 @@ function SeleccionAsientos() {
           )
         );
       } catch (error) {
-        console.error("❌ Error al cargar datos:", error);
+        console.error(" Error al cargar datos:", error);
       }
     };
 
@@ -99,7 +99,7 @@ function SeleccionAsientos() {
       return;
     }
 
-    alert("✅ Reserva realizada con éxito!");
+    alert(" Reserva realizada con éxito!");
 
     const total = (funcion.precio || 0) * reservasCreadas.length;
 
@@ -128,7 +128,7 @@ function SeleccionAsientos() {
 
   return (
     <div className="seleccion-container">
-      <h2>🎟️ Selección de Asientos</h2>
+      <h2> Selección de Asientos</h2>
       <p>
         Película: <b>{funcion.pelicula?.titulo || "Sin título"}</b> <br />
         Sala: <b>{sala.nombre}</b> <br />

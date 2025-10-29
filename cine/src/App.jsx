@@ -14,6 +14,7 @@ import AdminCombos from "./pages/AdminCombos";
 import FacturaCombo from "./pages/FacturaCombo";
 import CombosCliente from "./pages/ComboCliente";
 import AdminPromos from "./pages/AdminPromos";
+import CinesAdmin from './pages/CinesAdmin';
 import './App.css';
 import PagoCombo from "./pages/PagoCombo";
 import LoginPage from "./pages/Login";
@@ -78,6 +79,7 @@ function App() {
           <Route path="/combos" element={<CombosCliente />} />
           <Route path="/pagar-combo/:id" element={<PagoCombo />} />
           <Route path="/factura-combo" element={<FacturaCombo />} />
+          <Route path="/admincines" element={<CinesAdmin />} />
         </Routes>
 
         <footer className="footer">

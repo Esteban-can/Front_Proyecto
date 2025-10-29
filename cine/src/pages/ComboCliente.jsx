@@ -53,7 +53,7 @@ export default function CombosCliente() {
             className="btn-admin-combos"
             onClick={() => navigate("/admin/combos")}
           >
-            ⚙ Administrar Combos
+             Administrar Combos
           </button>
         )}
       </div>

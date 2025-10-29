@@ -18,7 +18,7 @@ function RegisterCine() {
         nombre,
         email,
         password,
-        rol: "cliente", // 👈 siempre cliente
+        rol: "cliente", 
       });
 
       if (res.status === 201) {

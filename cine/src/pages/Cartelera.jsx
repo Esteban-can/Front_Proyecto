@@ -21,7 +21,7 @@ const CarteleraAdmin = () => {
     anio: "",
   });
 
-  // ✅ Estado de función (ahora incluye precio)
+  //  Estado de función 
   const [funcionData, setFuncionData] = useState({
     fechas: [""],
     horas: [""],
@@ -29,7 +29,7 @@ const CarteleraAdmin = () => {
     subtitulos: false,
     formato: "2D",
     salaId: "",
-    precio: "", // 👈 Nuevo campo
+    precio: "", 
   });
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const CarteleraAdmin = () => {
     }
   };
 
-  // ✅ Función abrirModal agregada
+  
   const abrirModal = (pelicula = null) => {
     setPeliculaSeleccionada(pelicula);
     if (pelicula) {
@@ -86,7 +86,7 @@ const CarteleraAdmin = () => {
     setModalAbierto(true);
   };
 
-  // ✅ CORREGIDO: Función eliminarPelicula con ruta correcta
+  
   const eliminarPelicula = async (id) => {
     if (window.confirm("¿Estás seguro de eliminar esta película?")) {
       try {
@@ -100,7 +100,7 @@ const CarteleraAdmin = () => {
     }
   };
 
-  // ✅ CORREGIDO: Función guardarPelicula con rutas correctas
+  
   const guardarPelicula = async () => {
     try {
       if (peliculaSeleccionada) {
@@ -129,7 +129,7 @@ const CarteleraAdmin = () => {
       subtitulos: false,
       formato: "2D",
       salaId: "",
-      precio: "", // 👈 Reinicia precio
+      precio: "", 
     });
     setModalFuncionAbierto(true);
   };
@@ -144,7 +144,7 @@ const CarteleraAdmin = () => {
         formato: funcionData.formato,
         peliculaId: peliculaSeleccionada.id,
         salaId: funcionData.salaId,
-        precio: funcionData.precio, // 👈 Se envía al backend
+        precio: funcionData.precio, 
       };
 
       const res = await api.post("/funciones/create", payload);
@@ -269,7 +269,7 @@ const CarteleraAdmin = () => {
                       setFuncionData({ ...funcionData, fechas: nuevasFechas });
                     }}
                   >
-                    🗑️
+                    
                   </button>
                 )}
               </div>
@@ -304,7 +304,7 @@ const CarteleraAdmin = () => {
                       setFuncionData({ ...funcionData, horas: nuevasHoras });
                     }}
                   >
-                    🗑️
+                    
                   </button>
                 )}
               </div>
@@ -375,7 +375,7 @@ const CarteleraAdmin = () => {
 
             <div className="modal-buttons">
               <button className="guardar" onClick={guardarFuncion}>
-                🎬 Guardar Función
+                 Guardar Función
               </button>
               <button onClick={() => setModalFuncionAbierto(false)}>Cancelar</button>
             </div>

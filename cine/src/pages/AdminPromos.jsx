@@ -54,7 +54,7 @@ export default function AdminPromos() {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6 flex items-center gap-2">
-        ⚙️ Administración de Promociones
+         Administración de Promociones
       </h1>
 
       <button
@@ -69,7 +69,7 @@ export default function AdminPromos() {
         onSubmit={crearPromo}
         className="bg-gray-100 p-4 rounded-lg shadow-md mb-6 space-y-3"
       >
-        <h2 className="font-semibold text-lg mb-2">➕ Crear nueva promoción</h2>
+        <h2 className="font-semibold text-lg mb-2"> Crear nueva promoción</h2>
         <input
           type="text"
           placeholder="Código"
@@ -102,7 +102,7 @@ export default function AdminPromos() {
         </button>
       </form>
 
-      <h2 className="text-2xl font-semibold mb-4">📋 Lista de promociones</h2>
+      <h2 className="text-2xl font-semibold mb-4"> Lista de promociones</h2>
 
       <ul className="space-y-3">
         {promos.map((promo) => (
@@ -166,7 +166,7 @@ export default function AdminPromos() {
                       promo.activo ? "text-green-600" : "text-red-600"
                     }`}
                   >
-                    {promo.activo ? "✅ Activa" : "🚫 Inactiva"}
+                    {promo.activo ? " Activa" : " Inactiva"}
                   </span>
                 </div>
 
