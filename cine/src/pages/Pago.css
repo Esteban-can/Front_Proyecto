@@ -1,110 +1,403 @@
 .pago-container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 40px auto;
-  padding: 30px;
+  padding: 40px;
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  gap: 40px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 24px;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
 .pago-container h2 {
   width: 100%;
   text-align: center;
-  color: #222;
-  font-size: 1.8rem;
+  color: #1a1a1a;
+  font-size: 2.2rem;
   margin-bottom: 10px;
+  background: linear-gradient(135deg, #e50914 0%, #b80710 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .resumen {
   flex: 1;
-  min-width: 260px;
-  background: #f7f7f7;
-  padding: 20px;
-  border-radius: 16px;
-  border: 1px solid #ddd;
+  min-width: 280px;
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(229, 9, 20, 0.1);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.resumen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #e50914 0%, #ff4757 100%);
 }
 
 .resumen h3 {
   margin-top: 0;
   color: #e50914;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.resumen h3::before {
+  content: '🎬';
+  font-size: 1.2em;
 }
 
 .resumen p {
-  color: #444;
-  line-height: 1.6;
+  color: #333; /* Cambiado a negro para mejor legibilidad */
+  line-height: 1.7;
   font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+.resumen strong {
+  color: #000; /* Cambiado a negro puro */
+  font-weight: 700;
+}
+
+/* Texto en negro para información de descuento */
+.descuento-info,
+.promo-section,
+.promo-section label {
+  color: #000 !important; /* Fuerza color negro */
+}
+
+.descuento-info strong {
+  color: #000 !important; /* Fuerza color negro */
 }
 
 .pago-form {
   flex: 1.2;
-  min-width: 280px;
+  min-width: 320px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  background: #fefefe;
-  padding: 25px;
-  border-radius: 16px;
-  border: 1px solid #eee;
+  gap: 20px;
+  background: linear-gradient(145deg, #ffffff 0%, #fafbfc 100%);
+  padding: 35px;
+  border-radius: 20px;
+  border: 1px solid rgba(229, 9, 20, 0.1);
+  box-shadow: 
+    0 6px 25px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+}
+
+.pago-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #e50914 0%, #ff4757 100%);
 }
 
 .pago-form label {
   display: flex;
   flex-direction: column;
   font-weight: 600;
-  color: #333;
+  color: #000; /* Cambiado a negro */
+  font-size: 0.95rem;
+  gap: 8px;
 }
 
 .pago-form input {
-  margin-top: 6px;
-  padding: 10px;
+  padding: 14px 16px;
   font-size: 1rem;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  transition: border-color 0.2s ease;
+  border-radius: 12px;
+  border: 2px solid #e1e5e9;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  color: #000; /* Texto en negro */
+}
+
+.pago-form input::placeholder {
+  color: #666; /* Placeholder en gris para contraste */
 }
 
 .pago-form input:focus {
   outline: none;
   border-color: #e50914;
+  box-shadow: 
+    0 0 0 3px rgba(229, 9, 20, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.pago-form input:hover {
+  border-color: #c0c6cc;
+}
+
+/* Estilos para el selector de promociones */
+.promocion-select {
+  padding: 14px 16px;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 2px solid #e1e5e9;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23000' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px;
+  color: #000; /* Texto en negro */
+}
+
+.promocion-select:focus {
+  outline: none;
+  border-color: #e50914;
+  box-shadow: 
+    0 0 0 3px rgba(229, 9, 20, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.promocion-select:hover {
+  border-color: #c0c6cc;
 }
 
 button[type="submit"] {
-  background-color: #e50914;
+  background: linear-gradient(135deg, #e50914 0%, #b80710 100%);
   color: white;
-  padding: 12px;
+  padding: 16px 24px;
   border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: bold;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 6px 20px rgba(229, 9, 20, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+button[type="submit"]:hover::before {
+  left: 100%;
 }
 
 button[type="submit"]:hover {
-  background-color: #b00610;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(229, 9, 20, 0.4),
+    0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 4px 12px rgba(229, 9, 20, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* ✅ Responsive */
+/* Sección de promociones */
+.promo-section {
+  margin: 25px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #fff5f5 0%, #fff0f0 100%);
+  border-radius: 16px;
+  border: 2px dashed #e50914;
+  position: relative;
+  color: #000; /* Texto en negro */
+}
+
+.promo-section label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #000 !important; /* Fuerza color negro */
+  font-size: 1rem;
+}
+
+/* Mensajes - mantienen sus colores originales */
+.mensaje {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 500;
+  margin: 10px 0;
+  border: 1px solid;
+  font-size: 0.9rem;
+}
+
+.mensaje-exito {
+  color: #0f5132;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-color: #34d399;
+}
+
+.mensaje-error {
+  color: #7f1d1d;
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border-color: #f87171;
+}
+
+/* Información de descuento en negro */
+.descuento-info {
+  color: #000 !important; /* Fuerza color negro */
+  font-weight: 600;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-radius: 12px;
+  border-left: 4px solid #10b981;
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.descuento-info::before {
+  content: '🎉';
+  font-size: 1.2em;
+}
+
+.descuento-info strong {
+  color: #000 !important; /* Fuerza color negro */
+}
+
+/* Elemento de tarjeta de Stripe */
+.StripeElement {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 2px solid #e1e5e9;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  color: #000; /* Texto en negro */
+}
+
+.StripeElement--focus {
+  border-color: #e50914;
+  box-shadow: 
+    0 0 0 3px rgba(229, 9, 20, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.StripeElement:hover {
+  border-color: #c0c6cc;
+}
+
+/* Texto del total a pagar */
+.resumen h3:last-of-type {
+  color: #e50914; /* Mantiene el color rojo para el total */
+  background: none;
+  -webkit-text-fill-color: #e50914;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .pago-container {
     flex-direction: column;
     align-items: stretch;
+    margin: 20px;
+    padding: 25px;
+    gap: 25px;
   }
 
   .resumen, .pago-form {
     width: 100%;
+    min-width: auto;
   }
 
   .resumen {
     order: -1;
   }
+
+  .pago-container h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pago-container {
+    margin: 15px;
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .resumen, .pago-form {
+    padding: 20px;
+  }
+
+  .pago-container h2 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Animaciones suaves */
+.pago-container {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Clases específicas para texto en negro */
+.texto-negro {
+  color: #000 !important;
+}
+
+.label-negro {
+  color: #000 !important;
+}
+
+.info-negro {
+  color: #000 !important;
 }

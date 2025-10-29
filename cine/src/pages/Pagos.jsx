@@ -38,7 +38,6 @@ function PagoForm({ reservas, total, promocionId, clearCart }) {
       return;
     }
 
-    // 🔹 CORRECCIÓN: Cambiar validación para Stripe (mínimo Q0.01)
     if (!total || total < 0.01) {
       setMensaje("⚠ El monto total debe ser al menos Q0.01");
       return;
@@ -56,12 +55,10 @@ function PagoForm({ reservas, total, promocionId, clearCart }) {
     try {
       const reservaIds = reservas.map((r) => r.id);
 
-      // 🔹 CORRECCIÓN: NO enviar el total al backend - el backend debe calcularlo
       const response = await api.post("/pagos/create", {
         reservaIds,
         metodoPago: "tarjeta",
         promocionId: promocionId || null,
-        //  REMOVER: total, // El backend debe calcular el total
       });
 
       const { clientSecret, pago, tickets } = response.data;
@@ -152,9 +149,6 @@ function PagoForm({ reservas, total, promocionId, clearCart }) {
   );
 }
 
-// -----------------------------------------------------------
-// 🔹 Sección de promociones antes del pago
-// -----------------------------------------------------------
 export default function PagoTarjeta({ clearCart }) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -169,39 +163,54 @@ export default function PagoTarjeta({ clearCart }) {
   } = location.state || {};
 
   const [promocion, setPromocion] = useState(null);
-  const [codigoPromo, setCodigoPromo] = useState("");
+  const [promociones, setPromociones] = useState([]);
   const [total, setTotal] = useState(totalInicial);
   const [mensajePromo, setMensajePromo] = useState("");
+  const [cargandoPromociones, setCargandoPromociones] = useState(true);
 
-  const aplicarPromocion = async () => {
-    try {
-      const res = await api.get("/promociones");
-      const promo = res.data.find(
-        (p) => p.codigo.toLowerCase() === codigoPromo.toLowerCase() && p.activo
-      );
-
-      if (!promo) {
-        setMensajePromo(" Código de promoción inválido o inactivo.");
-        setPromocion(null);
-        setTotal(totalInicial);
-        return;
+  // 🔹 Cargar promociones disponibles al montar el componente
+  useEffect(() => {
+    const cargarPromociones = async () => {
+      try {
+        const res = await api.get("/promociones");
+        const promocionesActivas = res.data.filter(p => p.activo);
+        setPromociones(promocionesActivas);
+        console.log("Promociones cargadas:", promocionesActivas);
+      } catch (error) {
+        console.error("Error obteniendo promociones:", error);
+        setMensajePromo("⚠ No se pudieron cargar las promociones.");
+      } finally {
+        setCargandoPromociones(false);
       }
+    };
 
-      // 🔹 CORRECCIÓN: Convertir el descuento a porcentaje
-      // Si en la BD está guardado como 0.15, lo convertimos a 15%
-      const porcentajeDescuento = promo.descuento * 100;
-      const descuento = (totalInicial * porcentajeDescuento) / 100;
-      
-      // 🔹 CORRECCIÓN: Mínimo Q0.01 para Stripe en lugar de Q1.00
-      const nuevoTotal = Math.max(totalInicial - descuento, 0.01);
+    cargarPromociones();
+  }, []);
 
-      setPromocion(promo);
-      setTotal(nuevoTotal);
-      setMensajePromo(` Promoción aplicada: -${porcentajeDescuento}% (Q${descuento.toFixed(2)})`);
-    } catch (error) {
-      console.error("Error obteniendo promociones:", error);
-      setMensajePromo("⚠ No se pudo validar la promoción.");
+  const aplicarPromocion = (promoId) => {
+    if (!promoId) {
+      // Si selecciona "Sin promoción"
+      setPromocion(null);
+      setTotal(totalInicial);
+      setMensajePromo("✅ Sin promoción aplicada");
+      return;
     }
+
+    const promoSeleccionada = promociones.find(p => p.id === parseInt(promoId));
+    
+    if (!promoSeleccionada) {
+      setMensajePromo("❌ Promoción no encontrada");
+      return;
+    }
+
+    // Aplicar descuento
+    const porcentajeDescuento = promoSeleccionada.descuento * 100;
+    const descuento = (totalInicial * porcentajeDescuento) / 100;
+    const nuevoTotal = Math.max(totalInicial - descuento, 0.01);
+
+    setPromocion(promoSeleccionada);
+    setTotal(nuevoTotal);
+    setMensajePromo(`✅ Promoción aplicada: ${promoSeleccionada.descripcion} (-${porcentajeDescuento}% = Q${descuento.toFixed(2)})`);
   };
 
   if (!reservas.length) {
@@ -224,22 +233,35 @@ export default function PagoTarjeta({ clearCart }) {
 
         <div className="promo-section">
           <label>
-            Código de promoción:
-            <input
-              type="text"
-              value={codigoPromo}
-              onChange={(e) => setCodigoPromo(e.target.value)}
-              placeholder="Ej: ESTUDIANTE"
-            />
+            Selecciona una promoción:
+            {cargandoPromociones ? (
+              <p>Cargando promociones...</p>
+            ) : (
+              <select 
+                onChange={(e) => aplicarPromocion(e.target.value)}
+                value={promocion?.id || ""}
+                className="promocion-select"
+              >
+                <option value="">-- Sin promoción --</option>
+                {promociones.map((promo) => (
+                  <option key={promo.id} value={promo.id}>
+                    {promo.descripcion} - {(promo.descuento * 100).toFixed(0)}% descuento
+                  </option>
+                ))}
+              </select>
+            )}
           </label>
-          <button onClick={aplicarPromocion}>Aplicar</button>
-          {mensajePromo && <p className="mensaje">{mensajePromo}</p>}
+          
+          {mensajePromo && (
+            <p className={`mensaje ${mensajePromo.includes('✅') ? 'mensaje-exito' : 'mensaje-error'}`}>
+              {mensajePromo}
+            </p>
+          )}
         </div>
 
         {promocion && (
           <p className="descuento-info">
-             <strong>Promoción aplicada:</strong> {promocion.descripcion} 
-           
+            <strong>Promoción aplicada:</strong> {promocion.descripcion} 
             ({(promocion.descuento * 100).toFixed(0)}%)
           </p>
         )}

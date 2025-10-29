@@ -28,7 +28,7 @@ export default function FacturaCombo() {
     const pageWidth = doc.internal.pageSize.getWidth();
 
     // --- 🔹 Logo centrado
-    const logoWidth = 40;
+    const logoWidth = 90;
     const logoHeight = 20;
     const logoX = (pageWidth - logoWidth) / 2;
     const logoY = 10;
