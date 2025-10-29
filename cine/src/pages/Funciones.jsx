@@ -75,7 +75,17 @@ function Funciones() {
           <button onClick={() => navigate("/agregar")} className="btn-agregar">
              Agregar Película
           </button>
-     //aqui va el boton de dashboard
+            <button
+  variant="contained"
+  color="success"
+  onClick={() =>
+    window.open(
+      "https://app.powerbi.com/view?r=eyJrIjoiNmYzOWYxMDMtM2JiYS00NWE1LTlkNjYtZWU5NmYzMjY4NTJmIiwidCI6IjVmNTNiNGNlLTYzZDQtNGVlOC04OGQyLTIyZjBiMmQ0YjI3YSIsImMiOjR9"
+    )
+  }
+>
+  Ver Dashboard
+</button>
         </div>
       )}
 
